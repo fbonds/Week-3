@@ -15,6 +15,19 @@ module.exports.getById = (bookId) => {
   return Book.findOne({ _id: bookId }).lean();
 }
 
+// get books for author
+module.exports.getByAuthorId = (authorId) => {
+  if (!mongoose.Types.ObjectId.isValid(authorId)) {
+    return null;
+  }
+  return Book.find({ authorId: authorId }).lean();
+} 
+
+// search books
+module.exports.search = (searchTerm) => {
+  return Book.find({ blurb: searchTerm }).lean();
+}
+
 module.exports.deleteById = async (bookId) => {
   if (!mongoose.Types.ObjectId.isValid(bookId)) {
     return false;
