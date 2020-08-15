@@ -2,6 +2,7 @@ const { Router } = require("express");
 const router = Router();
 
 const authorDAO = require('../daos/author');
+const { route } = require("./books");
 
 // Create
 router.post("/", async (req, res, next) => {
@@ -40,6 +41,11 @@ router.get("/", async (req, res, next) => {
   const authors = await authorDAO.getAll(page, perPage);
   res.json(authors);
 });
+
+// Read - Stats
+router.get("/stats", async (req,res, next) => {
+  
+})
 
 // Update
 router.put("/:id", async (req, res, next) => {

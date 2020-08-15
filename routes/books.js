@@ -24,16 +24,14 @@ router.post("/", async (req, res, next) => {
 
 // Read - Search
 router.get("/search", async (req, res, next) => {
-  console.log(req.query);
   const searchRes = await bookDAO.search(req.query.query);
-  console.log(searchRes);
   if (searchRes) {
-    res.sendStatus(200);
     res.json(searchRes);
   } else {
     res.sendStatus(404);
   }
 });
+
 
 // Read - single book
 router.get("/:id", async (req, res, next) => {

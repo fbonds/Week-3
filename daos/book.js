@@ -5,6 +5,7 @@ const Book = require('../models/book');
 module.exports = {};
 
 module.exports.getAll = (page, perPage) => {
+  // console.log(Book.find().limit(perPage).skip(perPage*page).lean());
   return Book.find().limit(perPage).skip(perPage*page).lean();
 }
 
@@ -25,7 +26,9 @@ module.exports.getByAuthorId = (authorId) => {
 
 // search books
 module.exports.search = (searchTerm) => {
-  return Book.find({ blurb: searchTerm }).lean();
+  return Book.find( { $text: { $search: searchTerm } },
+    { score: { $meta: "textScore" } }
+ ).sort( { score: { $meta: "textScore" } } ).lean();
 }
 
 module.exports.deleteById = async (bookId) => {
